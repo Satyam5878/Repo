@@ -1,0 +1,5 @@
+nyse_data = load 'hdfs://localhost:54310/user/pig/NYSE/input/nyse_data.txt' using PigStorage('\t') as (exchange:chararray,ticker:chararray,date:datetime,open:float,high:float,low:float,close:float,volume:int,adjclose:float)
+
+
+nyse_data_modified = foreach nyse_data generate exchange,ticker,GetYear(date),GetMonth(date),GetDay(date),open,high,low,close,volume,adjclose as (exchange:chararray,ticker:chararray,year:int,month:int,day:int,open:float,high:float,low:float,close:float,volume:int,adjclose:float);
+
