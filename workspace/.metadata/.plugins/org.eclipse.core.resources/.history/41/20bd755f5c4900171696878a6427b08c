@@ -1,0 +1,42 @@
+package org.os.wipro.hadoop;
+
+import java.io.IOException;
+
+import org.apache.hadoop.conf.Configuration;
+import org.apache.hadoop.io.LongWritable;
+import org.apache.hadoop.io.Text;
+import org.apache.hadoop.mapreduce.Job;
+import org.apache.hadoop.mapreduce.Mapper;
+import org.apache.hadoop.mapreduce.Reducer;
+import org.apache.hadoop.util.GenericOptionsParser;
+
+public class SplitTicker {
+
+	public static void main(String[] args) throws ClassNotFoundException, IOException, InterruptedException {
+		
+		Configuration conf = new Configuration();
+		
+		String[] otherArgs = new GenericOptionsParser(conf,args).getRemainingArgs();
+		
+		Job job = Job.getInstance(conf, "SplitTicker");
+		
+		job.setJarByClass(SplitTicker.class);
+		job.setMapperClass(SplitTickerMapper.class);
+		job.setReducerClass(SplitTickerReducer.class);
+		
+		job.setNumReduceTasks(4);
+		System.out.println(job.waitForCompletion(true));
+		
+	}
+	public static class SplitTickerMapper extends Mapper<LongWritable,Text,Text,Text>{
+		public void map(LongWritable key,Text value,Context context){
+			String line  = 
+		}
+	}
+	public static class SplitTickerReducer extends Reducer<Text,Text,Text,Text>{
+		
+	}
+	
+	
+	
+}

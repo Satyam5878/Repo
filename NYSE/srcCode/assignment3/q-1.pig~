@@ -1,12 +1,8 @@
-a)
-nyse_data = load 'hdfs://localhost:54310/user/pig/NYSE/input/nyse_data.txt' using PigStorage('\t') as (exchange:chararray,ticker:chararray,date:datetime,open:float,high:float,low:float,close:float,volume:int,adjclose:float)
-
-b)
+nyse_data = load 'hdfs://localhost:54310/user/pig/NYSE/input/nyse_data.txt' using PigStorage('\t') as (exchange:chararray, ticker:chararray, date:datetime,open:float,high:float,low:float,close:float,volume:int,adjclose:float);
 nyse_data_modified = foreach nyse_data generate exchange,ticker,GetYear(date),GetMonth(date),GetDay(date),open,high,low,close,volume,adjclose;
-
-nyse_data_modified2 = foreach nyse_data_modified generate * as (exchange:chararray,ticker:chararray,year:int,month:int,day:int,open:float,high:float,low:float,close:float,volume:int,adjclose:float);
-
+nyse_data_modified2 = foreach nyse_data_modified generate * as(exchange:chararray, ticker:chararray, year:int, month:int, day:int, open:float, high:float,low:float,close:float,volume:int,adjclose:float);
 nyse_data_group = group nyse_data_modified2 by (ticker,year,month);
-
+nyse_data_max_min = foreach nyse_data_group generate (group.ticker,group.year,group.month), (MAX(nyse_data_modified2.adjclose),MIN(nyse_data_modified2.adjclose));
+store nyse_data_max_min into 'hdfs://localhost:54310/user/pig/NYSE/output/nyse_data_max_min.txt' using PigStorage('\t');
 
 
