@@ -1,0 +1,7 @@
+ hadoop fs -mkdir -p /user/training/stock/input/
+ hadoop fs -put /home/satyam/Desktop/Repo/NYSE/dataset/NYSE.txt /user/training/stock/input/
+ hadoop fs -ls /user/training/stock/input
+
+ hadoop fs -cat /user/training/stock/input/NYSE.txt
+ hadoop fs -rm -r /user/training/stock
+

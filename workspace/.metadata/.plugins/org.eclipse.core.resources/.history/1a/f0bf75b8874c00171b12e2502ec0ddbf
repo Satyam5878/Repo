@@ -1,0 +1,5 @@
+package org.os.wipro.hadoop;
+
+public class MaxVariationTicker {
+
+}
